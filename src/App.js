@@ -67,7 +67,7 @@ class Calculator extends Component {
             const result = 'Division by zero is undefined';
             this.setState({result});
           } else {
-            const result = eval(this.state.expression).toString();
+            const result = answer;
             this.setState({result});
           }
         }
