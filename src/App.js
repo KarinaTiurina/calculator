@@ -47,29 +47,32 @@ class Calculator extends Component {
               <tbody>
                 <tr>
                   <td><Button value='1' handleClick = {this.handleClick} /></td>
-                  <td><Button value='4' handleClick = {this.handleClick} /></td>
-                  <td><Button value='7' handleClick = {this.handleClick} /></td>
+                  <td><Button value='2' handleClick = {this.handleClick} /></td>
+                  <td><Button value='3' handleClick = {this.handleClick} /></td>
                   <td></td>
                   <td><Button value='+' handleClick = {this.handleClick} /></td>                
                   <td><Button value='*' handleClick = {this.handleClick} /></td>
                 </tr>
                 <tr>
-                  <td><Button value='2' handleClick = {this.handleClick} /></td>
+                  <td><Button value='4' handleClick = {this.handleClick} /></td>
                   <td><Button value='5' handleClick = {this.handleClick} /></td>
-                  <td><Button value='8' handleClick = {this.handleClick} /></td>
+                  <td><Button value='6' handleClick = {this.handleClick} /></td>
                   <td></td>
                   <td><Button value='-' handleClick = {this.handleClick} /></td>                                
                   <td><Button value='/' handleClick = {this.handleClick} /></td>
                 </tr>
                 <tr>
-                  <td><Button value='3' handleClick = {this.handleClick} /></td>
-                  <td><Button value='6' handleClick = {this.handleClick} /></td>
+                  <td><Button value='7' handleClick = {this.handleClick} /></td>
+                  <td><Button value='8' handleClick = {this.handleClick} /></td>
                   <td><Button value='9' handleClick = {this.handleClick} /></td>
+                  <td></td>
+                  <td><Button value='(' handleClick = {this.handleClick} /></td>                                
+                  <td><Button value=')' handleClick = {this.handleClick} /></td>
                 </tr>
                 <tr>
-                  <td></td>
-                  <td><Button value='0' handleClick = {this.handleClick} /></td>
                   <td><Button value='.' handleClick = {this.handleClick} /></td>
+                  <td><Button value='0' handleClick = {this.handleClick} /></td>
+                  <td><Button value='&#8730;' handleClick = {this.handleClick} /></td>
                   <td></td>
                   <td><Button value='=' handleClick = {this.handleClick} style={{background:'lightgreen'}} /></td> 
                   <td><Button value='C' handleClick = {this.handleClick} style={{background: 'pink'}} /></td> 
@@ -82,10 +85,15 @@ class Calculator extends Component {
   };
 
   handleClickFunc(event) {
-    const value = event.target.firstChild.nodeValue; // get the value from the target element (button)
+    const value = event.target.firstChild.nodeValue; 
     switch (value) {
       case '=' : {
         const result = eval(this.state.expression).toString();
+        this.setState({result});
+        break;
+      }
+      case "√" : {
+        const result = Math.sqrt(eval(this.state.expression)).toString();
         this.setState({result});
         break;
       }
