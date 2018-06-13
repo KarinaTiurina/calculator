@@ -36,6 +36,7 @@ class Calculator extends Component {
       expression: ''
     };
     this.handleClick = this.handleClickFunc.bind(this);
+    this.buttonValues = [['1', '2', '3', '+', '*'],['4', '5', '6', '-', '/'],['7', '8', '9', '(', ')'], ['.', '0', '√', '=', 'C']];
   };
 
   render() {
@@ -45,38 +46,10 @@ class Calculator extends Component {
           <div className="ButtonsBox">
             <table>
               <tbody>
-                <tr>
-                  <td><Button value='1' handleClick = {this.handleClick} /></td>
-                  <td><Button value='2' handleClick = {this.handleClick} /></td>
-                  <td><Button value='3' handleClick = {this.handleClick} /></td>
-                  <td></td>
-                  <td><Button value='+' handleClick = {this.handleClick} /></td>                
-                  <td><Button value='*' handleClick = {this.handleClick} /></td>
-                </tr>
-                <tr>
-                  <td><Button value='4' handleClick = {this.handleClick} /></td>
-                  <td><Button value='5' handleClick = {this.handleClick} /></td>
-                  <td><Button value='6' handleClick = {this.handleClick} /></td>
-                  <td></td>
-                  <td><Button value='-' handleClick = {this.handleClick} /></td>                                
-                  <td><Button value='/' handleClick = {this.handleClick} /></td>
-                </tr>
-                <tr>
-                  <td><Button value='7' handleClick = {this.handleClick} /></td>
-                  <td><Button value='8' handleClick = {this.handleClick} /></td>
-                  <td><Button value='9' handleClick = {this.handleClick} /></td>
-                  <td></td>
-                  <td><Button value='(' handleClick = {this.handleClick} /></td>                                
-                  <td><Button value=')' handleClick = {this.handleClick} /></td>
-                </tr>
-                <tr>
-                  <td><Button value='.' handleClick = {this.handleClick} /></td>
-                  <td><Button value='0' handleClick = {this.handleClick} /></td>
-                  <td><Button value='&#8730;' handleClick = {this.handleClick} /></td>
-                  <td></td>
-                  <td><Button value='=' handleClick = {this.handleClick} style={{background:'lightgreen'}} /></td> 
-                  <td><Button value='C' handleClick = {this.handleClick} style={{background: 'pink'}} /></td> 
-                </tr>
+                { this.buttonValues.map(rows => {
+                  var row = rows.map(value => <td><Button value={value} handleClick = {this.handleClick} /></td>);
+                  return <tr>{row}</tr>
+                })}
               </tbody>
             </table>
           </div>
@@ -88,13 +61,31 @@ class Calculator extends Component {
     const value = event.target.firstChild.nodeValue; 
     switch (value) {
       case '=' : {
-        const result = eval(this.state.expression).toString();
-        this.setState({result});
+        try {
+          var answer = eval(this.state.expression).toString();
+          if (answer === 'Infinity') {
+            const result = 'Division by zero is undefined';
+            this.setState({result});
+          } else {
+            const result = eval(this.state.expression).toString();
+            this.setState({result});
+          }
+        }
+        catch (error) {
+          const result = 'ERROR';
+          this.setState({result});
+        }
         break;
       }
       case "√" : {
-        const result = Math.sqrt(eval(this.state.expression)).toString();
-        this.setState({result});
+        try {
+          const result = Math.sqrt(eval(this.state.expression)).toString();
+          this.setState({result});
+        }
+        catch (error) {
+          const result = 'ERROR';
+          this.setState({result});
+        }
         break;
       }
       case 'C' : {
